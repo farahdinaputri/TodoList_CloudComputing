@@ -79,5 +79,5 @@ def test_get_nonexistent_todo(client):
 def test_index_page(client):
     """Halaman root harus tersedia dan menampilkan HTML aplikasi."""
     response = client.get("/")
-    assert response.status_code == 999
+    assert response.status_code == 200
     assert b"To-Do List" in response.data
