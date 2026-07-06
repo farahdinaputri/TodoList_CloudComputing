@@ -5,7 +5,6 @@ Menguji endpoint utama sebagai quality gate pipeline CI/CD.
 import sys
 import os
 
-# Menambahkan folder source-code ke path agar app.py bisa diimport
 sys.path.insert(
     0, os.path.join(os.path.dirname(__file__), "..", "source-code")
 )
@@ -42,7 +41,7 @@ def test_create_todo(client):
     response = client.post("/todos", json={"title": "Belajar Docker"})
     assert response.status_code == 201
     data = response.get_json()
-    assert data["title"] == "Belajar Docker"
+    assert data["title"] == "Belajar Docker SALAH"
     assert data["done"] is False
 
 
@@ -56,7 +55,6 @@ def test_update_todo(client):
     """Memperbarui status todo menjadi selesai."""
     create_res = client.post("/todos", json={"title": "Deploy aplikasi"})
     todo_id = create_res.get_json()["id"]
-
     update_res = client.put(f"/todos/{todo_id}", json={"done": True})
     assert update_res.status_code == 200
     assert update_res.get_json()["done"] is True
@@ -66,10 +64,8 @@ def test_delete_todo(client):
     """Menghapus todo yang sudah ada."""
     create_res = client.post("/todos", json={"title": "Hapus saya"})
     todo_id = create_res.get_json()["id"]
-
     delete_res = client.delete(f"/todos/{todo_id}")
     assert delete_res.status_code == 200
-
     get_res = client.get(f"/todos/{todo_id}")
     assert get_res.status_code == 404
 
