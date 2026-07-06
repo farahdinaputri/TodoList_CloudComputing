@@ -41,7 +41,7 @@ def test_create_todo(client):
     response = client.post("/todos", json={"title": "Belajar Docker"})
     assert response.status_code == 201
     data = response.get_json()
-    assert data["title"] == "Belajar Docker SALAH"
+    assert data["title"] == "Belajar Docker"
     assert data["done"] is False
 
 
